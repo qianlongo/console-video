@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>console video</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+
+    .box{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #video, #canvas{
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <video id="video" width="320" height="176" controls playsinline muted>
+      <source src="./mov_bbb.mp4" />
+    </video>
+    <canvas id="canvas" width="320" height="176"></canvas>
+  </div>
+  <script>
+    const video = document.querySelector('#video')
+    const canvas = document.querySelector('#canvas')
+
+    const autoPlay = () => {
+      video.addEventListener('canplay', () => {
+        video.play() // play video
+ 
+        if ('requestVideoFrameCallback' in video) {
+          video.requestVideoFrameCallback(drawImageVideo)
+        }
+      })
+    }
+
+  const drawImageVideo = (now, metadata) => {
+    console.log(now, metadata)
+
+    video.requestVideoFrameCallback(drawImageVideo)
+  }
+
+  autoPlay()
+  </script>
+</body>
+</html>
